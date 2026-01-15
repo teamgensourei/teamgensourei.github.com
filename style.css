@@ -1,0 +1,155 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: #000;
+  color: #7cff9b;
+  font-family: 'Share Tech Mono', monospace;
+  overflow: hidden;
+}
+
+/* フレーム */
+#frame {
+  position: relative;
+  height: 100%;
+  padding: 26px;
+  box-sizing: border-box;
+}
+
+#frame::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(124,255,155,0.25);
+  box-shadow: inset 0 0 25px rgba(124,255,155,0.08);
+  pointer-events: none;
+}
+
+/* ヘッダー */
+#header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  opacity: 0.7;
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+
+/* コンソール */
+#console {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.7;
+  height: calc(100% - 80px);
+  overflow-y: auto;
+  text-shadow: 0 0 8px rgba(124,255,155,0.4);
+}
+
+/* 入力 */
+#input-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt {
+  color: #7cff9b;
+  opacity: 0.8;
+}
+
+input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  caret-color: #7cff9b;
+}
+
+/* オーバーレイ */
+#overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#overlay-text {
+  opacity: 0;
+  font-size: 22px;
+  letter-spacing: 0.3em;
+  color: #7cff9b;
+  text-shadow: 0 0 12px rgba(124,255,155,0.6);
+}
+
+#overlay-text.active {
+  opacity: 0.8;
+}
+
+#overlay-text.alert {
+  color: #ff4c4c;
+  opacity: 1;
+}
+
+/* フラッシュ */
+body.flash {
+  filter: brightness(1.2);
+}
+
+/* スキャンライン */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+}
+
+/* ノイズ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'>\
+<filter id='n'>\
+<feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/>\
+</filter>\
+<rect width='100%' height='100%' filter='url(%23n)' opacity='0.04'/>\
+</svg>");
+  pointer-events: none;
+}
+
+/* ===== ADDON MONUMENT : DENSITY ENHANCE ===== */
+
+/* 線をもう一段薄く */
+.addon-lines.dense span{
+  height:1px;
+  opacity:.35;
+}
+
+/* バーコードの別層 */
+.addon-barcode.thin i{
+  height:28px;
+  opacity:.12;
+}
+
+/* バーコードのばらつき強化 */
+.addon-barcode i:nth-child(2n){opacity:.25}
+.addon-barcode i:nth-child(4n){opacity:.45}
+.addon-barcode i:nth-child(7n){opacity:.6}
+
+/* 少しだけ詰める */
+.addon-barcode,
+.addon-lines{
+  margin-bottom:8px;
+}

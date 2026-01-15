@@ -1,11 +1,381 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>GitHub Pages Test</title>
+<meta charset="utf-8">
+<title>Console -Complicate-</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#ccc;
+  font-family:Consolas,Menlo,monospace;
+  overflow:hidden;
+}
+
+/* ===== 起動画面 ===== */
+#boot-screen{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  animation:bootFadeOut 4.5s ease forwards;
+  animation-delay:3.5s;
+}
+#boot-screen img{
+  width:70%;
+  max-width:1200px;
+  opacity:0;
+  animation:imageFadeIn 2.5s ease forwards;
+}
+@keyframes imageFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes bootFadeOut{to{opacity:0;pointer-events:none}}
+
+/* ===== 装飾UI ===== */
+#top-credit{
+  position:fixed;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:11px;
+  letter-spacing:.25em;
+  color:#666;
+  opacity:.6;
+}
+
+.measure-line{
+  position:fixed;
+  left:0;
+  width:100%;
+  height:1px;
+  background:repeating-linear-gradient(
+    to right,
+    transparent 0,
+    #333 20px,
+    transparent 40px
+  );
+  opacity:.4;
+}
+#measure-top{top:56px}
+#measure-bottom{bottom:56px}
+
+.fake-barcode{
+  position:fixed;
+  top:0;
+  width:14px;
+  height:100%;
+  background:repeating-linear-gradient(
+    to bottom,
+    #444 0px,
+    #444 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  opacity:.35;
+}
+#barcode-left{left:8px}
+#barcode-right{right:8px}
+
+#center-fragments{
+  position:fixed;
+  top:48%;
+  left:10%;
+  width:80%;
+  height:1px;
+  background:repeating-linear-gradient(
+    to right,
+    #555 0px,
+    #555 30px,
+    transparent 30px,
+    transparent 80px
+  );
+  opacity:.45;
+}
+
+#info-block{
+  position:fixed;
+  bottom:24px;
+  left:24px;
+  font-size:11px;
+  line-height:1.6;
+  color:#888;
+  border:1px solid #333;
+  padding:10px 14px;
+  background:rgba(0,0,0,.35);
+}
+.ib-title{font-weight:bold;letter-spacing:.2em;margin-bottom:6px}
+
+#side-mark{
+  position:fixed;
+  right:22px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:14px;
+  letter-spacing:.3em;
+  color:#777;
+  opacity:.7;
+}
+
+/* ===== メイン ===== */
+#frame{
+  position:absolute;
+  inset:0;
+  padding:80px 40px;
+}
+
+#console{max-width:520px}
+#log{
+  font-size:12px;
+  line-height:1.8;
+  margin-bottom:12px;
+  color:#aaa;
+}
+#input{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid #333;
+  color:#ccc;
+  font-size:13px;
+  outline:none;
+}
+
+/* ===== モニュメント（高密度） ===== */
+.addon-monument{
+  margin-top:18px;
+  padding-top:12px;
+  border-top:1px dashed #333;
+}
+
+.addon-lines{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+  margin-bottom:8px;
+}
+.addon-lines span{
+  height:2px;
+  background:linear-gradient(to right,transparent,#555,transparent);
+  opacity:.6;
+}
+.addon-lines.dense span{
+  height:1px;
+  opacity:.35;
+}
+
+.addon-barcode{
+  display:flex;
+  gap:2px;
+  margin-bottom:8px;
+}
+.addon-barcode i{
+  width:3px;
+  height:36px;
+  background:#777;
+  opacity:.15;
+}
+.addon-barcode.thin i{
+  height:28px;
+  opacity:.12;
+}
+.addon-barcode i:nth-child(2n){opacity:.25}
+.addon-barcode i:nth-child(4n){opacity:.45}
+.addon-barcode i:nth-child(7n){opacity:.6}
+
+.addon-label{
+  font-size:10px;
+  letter-spacing:.25em;
+  color:#777;
+  line-height:1.6;
+}
+
+/* ===== 右側テキスト（完全版） ===== */
+#right-text{
+  position:absolute;
+  top:80px;
+  right:40px;
+  width:380px;
+  font-size:12px;
+  line-height:1.9;
+  color:#9a9a9a;
+  opacity:.85;
+}
+#right-text p{margin:0 0 14px}
+.keyword{color:#ccc}
+
+/* ===== 回答UI ===== */
+#confirmed-panel{
+  position:fixed;
+  bottom:24px;
+  left:240px;
+  font-size:11px;
+  color:#777;
+  opacity:0;
+}
+#post-x{
+  display:none;
+  margin-top:12px;
+  font-size:11px;
+  color:#aaa;
+  text-decoration:none;
+  border:1px solid #333;
+  padding:6px 10px;
+}
+#post-x:hover{background:#111}
+
+.fade-in{animation:fadeIn .8s ease forwards}
+.glitch{animation:glitch .25s steps(2) 3}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes glitch{0%{opacity:1}50%{opacity:.2}100%{opacity:1}}
+</style>
 </head>
+
 <body>
-  <h1>GitHub Pages 動いた！</h1>
-  <p>しのくんのサイトだよ。</p>
+
+<div id="boot-screen">
+  <img src="team (1).svg" alt="">
+</div>
+
+<div id="top-credit">© Team:還遭霊 / Team:GenSouRei</div>
+<div id="measure-top" class="measure-line"></div>
+<div id="measure-bottom" class="measure-line"></div>
+<div id="barcode-left" class="fake-barcode"></div>
+<div id="barcode-right" class="fake-barcode"></div>
+<div id="center-fragments"></div>
+
+<div id="info-block">
+  <div class="ib-title">GSRK</div>
+  <div>PHASE : <span id="phase">0</span></div>
+  <div>STATUS : OBSERVING</div>
+  <div>NODE : ACTIVE</div>
+</div>
+
+<div id="side-mark"><span>D</span><span>4</span><span>K</span><span>K</span></div>
+
+<div id="frame">
+  <div id="console">
+    <div id="log">INPUT COMMAND.</div>
+    <input id="input" autocomplete="off">
+
+    <div class="addon-monument">
+      <div class="addon-lines">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <div class="addon-lines dense">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="addon-barcode">
+        <i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="addon-barcode thin">
+        <i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="addon-label">
+        MONUMENT NODE : B-04<br>
+        SIGNAL STATUS : OBSERVING<br>
+        DIMENSION LINK : ACTIVE
+      </div>
+    </div>
+
+    <a id="post-x" target="_blank">POST RESULT TO X</a>
+  </div>
+
+  <div id="right-text">
+    <p>This is a space named only as the boundary that lies between reality and fiction.</p>
+    <p>All beings, perceptions, and concepts that exist in this world converge here.</p>
+    <p>Dimensions extend like branching paths.</p>
+    <p>Those dimensions ultimately arrive at this boundary.</p>
+    <p>Dimensions unfold as four-dimensional space, the three-dimensional plane in which we reside,<br>
+       the two-dimensional plane that exists upon a surface,<br>
+       and the one-dimensional line defined only by length.</p>
+    <p>What we are primarily able to observe and create are these three alone.</p>
+    <p>However, beyond them exist numerous dimensions that we are unable to perceive.</p>
+    <p>The place where all of those dimensions gather is here.</p>
+    <p>Countless stories exist, branching endlessly like limbs of a tree.</p>
+    <p>We call this phenomenon "<span class="keyword">Gensourei</span>".</p>
+  </div>
+</div>
+
+<div id="confirmed-panel"></div>
+
+<script>
+setTimeout(()=>{document.getElementById("boot-screen")?.remove()},8000);
+
+const input=document.getElementById("input");
+const log=document.getElementById("log");
+const phaseEl=document.getElementById("phase");
+const confirmedPanel=document.getElementById("confirmed-panel");
+const postX=document.getElementById("post-x");
+
+const answers=["MISSION_I_COMPLETE"];
+const confirmed=new Set();
+
+input.addEventListener("keydown",e=>{
+  if(e.key!=="Enter")return;
+  const cmd=input.value.trim();
+  input.value="";
+
+  if(answers.includes(cmd)&&!confirmed.has(cmd)){
+    confirmed.add(cmd);
+    const p=confirmed.size;
+
+    log.textContent="VERIFYING INPUT...";
+    log.className="glitch";
+
+    setTimeout(()=>{
+      log.className="";
+      log.textContent="ANSWER CONFIRMED.";
+      log.classList.add("fade-in");
+
+      phaseEl.textContent=p;
+      confirmedPanel.textContent=`CONFIRMED NODE ${p}`;
+      confirmedPanel.classList.add("fade-in");
+      confirmedPanel.style.opacity=1;
+
+      const d=new Date();
+      const today=
+        d.getFullYear()+"/"+
+        String(d.getMonth()+1).padStart(2,"0")+"/"+
+        String(d.getDate()).padStart(2,"0");
+
+      const postText=
+`◤◢◤調査完了◢◤◢
+
+あなたはログデータ「mission I」の問題を解決し、
+虚構の存在、"葎"を元ある場所へ返す一つの過程を完了しました。
+
+また、「▓▓▓▓▓▓」データ解明の手掛かりを一部を完了させました。
+
+虚構から現実への戻化の記録：${today}
+
+#バベ尖 #バベルの尖塔 #ARG #リアルタイム`;
+
+      postX.href="https://x.com/intent/post?text="+encodeURIComponent(postText);
+      postX.style.display="block";
+      postX.classList.add("fade-in");
+    },1200);
+  }else{
+    log.textContent="NO RESPONSE.";
+  }
+});
+</script>
+
 </body>
 </html>

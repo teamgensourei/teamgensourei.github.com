@@ -1,0 +1,91 @@
+{
+  "words": {
+    "huqtan": { "ja": "人", "pos": "noun" },
+    "shira": { "ja": "白", "pos": "noun" },
+    "kura": { "ja": "黒", "pos": "noun" },
+    "elqar": { "ja": "光", "pos": "noun" },
+    "umeth": { "ja": "闇", "pos": "noun" },
+    "mora": { "ja": "記録", "pos": "noun" },
+    "arka": { "ja": "始まり", "pos": "noun" },
+    "sera": { "ja": "全体", "pos": "noun" },
+    "nora": { "ja": "本質", "pos": "noun" },
+    "etha": { "ja": "部分", "pos": "noun" },
+
+    "tama": { "ja": "存在", "pos": "noun" },
+    "lira": { "ja": "場所", "pos": "noun" },
+    "fara": { "ja": "物", "pos": "noun" },
+    "solen": { "ja": "空", "pos": "noun" },
+    "chira": { "ja": "地", "pos": "noun" },
+    "uneth": { "ja": "海", "pos": "noun" },
+    "fira": { "ja": "火", "pos": "noun" },
+    "melqa": { "ja": "水", "pos": "noun" },
+    "qazen": { "ja": "風", "pos": "noun" },
+    "orun": { "ja": "山", "pos": "noun" },
+
+    "toki": { "ja": "時", "pos": "noun" },
+    "ima": { "ja": "今", "pos": "noun" },
+    "kago": { "ja": "過去", "pos": "noun" },
+    "mirel": { "ja": "未来", "pos": "noun" },
+    "jeka": { "ja": "時間", "pos": "noun" },
+    "korel": { "ja": "心", "pos": "noun" },
+    "darun": { "ja": "体", "pos": "noun" },
+    "voxa": { "ja": "声", "pos": "noun" },
+    "mer": { "ja": "目", "pos": "noun" },
+    "ten": { "ja": "手", "pos": "noun" },
+
+    "shirae": { "ja": "見る", "pos": "verb" },
+    "kikra": { "ja": "聞く", "pos": "verb" },
+    "yura": { "ja": "行く", "pos": "verb" },
+    "kurae": { "ja": "来る", "pos": "verb" },
+    "nema": { "ja": "眠る", "pos": "verb" },
+    "saka": { "ja": "話す", "pos": "verb" },
+    "kera": { "ja": "書く", "pos": "verb" },
+    "yoma": { "ja": "読む", "pos": "verb" },
+    "omra": { "ja": "思う", "pos": "verb" },
+    "sira": { "ja": "知る", "pos": "verb" },
+
+    "qeso": { "ja": "存在する", "pos": "verb" },
+    "telu": { "ja": "始まる", "pos": "verb" },
+    "nera": { "ja": "終わる", "pos": "verb" },
+    "firen": { "ja": "触れる", "pos": "verb" },
+    "koma": { "ja": "作る", "pos": "verb" },
+    "zena": { "ja": "壊す", "pos": "verb" },
+    "rema": { "ja": "残る", "pos": "verb" },
+    "soma": { "ja": "消える", "pos": "verb" },
+    "lena": { "ja": "続く", "pos": "verb" },
+    "hera": { "ja": "変わる", "pos": "verb" },
+
+    "ila": { "ja": "良い", "pos": "adj" },
+    "vara": { "ja": "悪い", "pos": "adj" },
+    "ogran": { "ja": "大きい", "pos": "adj" },
+    "misra": { "ja": "小さい", "pos": "adj" },
+    "nelqa": { "ja": "長い", "pos": "adj" },
+    "tiska": { "ja": "短い", "pos": "adj" },
+    "fural": { "ja": "深い", "pos": "adj" },
+    "aslen": { "ja": "浅い", "pos": "adj" },
+    "hayen": { "ja": "速い", "pos": "adj" },
+    "osren": { "ja": "遅い", "pos": "adj" }
+  }
+},
+
+{
+  "particles": {
+    "a":   { "ja": "は", "pos": "topic" },
+    "ga":  { "ja": "が", "pos": "subject" },
+    "en":  { "ja": "を", "pos": "object" },
+    "ni":  { "ja": "に", "pos": "dative" },
+    "de":  { "ja": "で", "pos": "instrument" },
+    "ru":  { "ja": "も", "pos": "also" },
+    "ka":  { "ja": "と", "pos": "and" },
+    "qeso":{ "ja": "の（存在連結）", "pos": "genitive" }
+  }
+},
+
+{
+  "grammar": {
+    "prog": { "arca": "-ir", "ja": "〜している" },
+    "pass": { "arca": "-eth", "ja": "〜されている" },
+    "past": { "arca": "-an", "ja": "〜した" },
+    "fut":  { "arca": "-el", "ja": "〜するだろう" }
+  }
+}
